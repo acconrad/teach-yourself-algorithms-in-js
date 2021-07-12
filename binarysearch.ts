@@ -1,4 +1,4 @@
-export function binarySearch(arr, target) {
+export function binarySearch(arr: number[], target: number): number {
     if (!arr.length) return -1;
     if (arr.length === 1) return arr[0];
     var left = 0;
