@@ -4,7 +4,7 @@ export function binarySearch(arr: number[], target: number): number {
     var left = 0;
     var right = arr.length - 1;
     while (left !== right) {
-        var mid = left + Math.floor(right-left/2);
+        var mid = left + Math.floor(right-left/2); // mid = right >>> 1
         if (arr[mid] === target) return mid;
         if (arr[mid] > target) {
             right = mid - 1;

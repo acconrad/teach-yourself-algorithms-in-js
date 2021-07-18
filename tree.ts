@@ -3,91 +3,76 @@
  */
 
 interface Node<T> {
-  public val: T;
-  public children: Node<T>[] | null;
+  val: T;
+  children: Node<T>[] | null;
 }
 
-export class Tree<Node<T>> {
-  private root: Node<T> | null;
+export class Tree {
+  private root: Node<any> | null;
 
   constructor() {
     this.root = null;
+  }
+}
+
+type TERMINAL = '*';
+interface TerminalNode {
+  val: TERMINAL;
+  children: null;
+}
+
+interface TrieNode {
+  val: string;
+  children: TrieNode | TerminalNode;
+}
+export class Trie {
+  private root: TrieNode;
+
+  constructor() {
+    this.root = {val: '', children: null};
   }
 }
 
 interface BinaryNode<T> {
-  public val: T;
-  public left: BinaryNode<T> | null;
-  public right: BinaryNode<T> | null;
+  val: T;
+  left: BinaryNode<T> | null;
+  right: BinaryNode<T> | null;
 }
 
-export class BinaryTree<BinaryNode<T>> {
-  private root: BinaryNode<T> | null;
+export class BinaryTree {
+  private root: BinaryNode<any> | null;
 
   constructor() {
     this.root = null;
   }
 
-  traverseInOrder(node: BinaryNode<T>): void {
+  traverseInOrder(node: BinaryNode<any>): void {
     this.traverseInOrder(node.left);
     this._visit(node);
     this.traverseInOrder(node.right);
   }
 
-  traversePreOrder(node: BinaryNode<T>): void {
+  traversePreOrder(node: BinaryNode<any>): void {
     this._visit(node);
     this.traversePreOrder(node.left);
     this.traversePreOrder(node.right);
   }
 
-  traversePostOrder(node: BinaryNode<T>): void {
+  traversePostOrder(node: BinaryNode<any>): void {
     this.traversePostOrder(node.left);
     this.traversePostOrder(node.right);
     this._visit(node);
   }
 
-  private _visit(node: BinaryNode<T>) {
+  dfs(root: BinaryNode<any>, target: any): BinaryNode<any> {
+    if (root.val === target) return root;
+    let left = this.dfs(root.left, target);
+    if (left !== null) return left;
+    let right = this.dfs(root.right, target);
+    return right;
+  }
+
+  private _visit(node: BinaryNode<any>) {
     console.log(`VISITED NODE: ${node.val}`);
-  }
-}
-
-export class MinHeap extends BinaryTree<BinaryNode<T>> {
-  constructor() {
-    super();
-  }
-
-  insert(item: T): void {
-    const temp: BinaryNode<T> = {val: item, left: null, right: null};
-    let ancestry: BinaryNode<T>[] = [this.root];
-    let r = this.root;
-    // find the rightmost element
-    while (r.right !== null) {
-      r = r.right;
-      ancestry.push(r);
-    }
-    // insert to the rightmost location
-    if (r.left === null) {
-      r.left = temp;
-    } else {
-      r.right = temp;
-    }
-    // fix tree swapping with ancestry until we land at the right spot
-    let current = r;
-    while (ancestry.length) {
-      let parent = ancestry.pop();
-      if (temp.val < parent.val) {
-        current.val = parent.val;
-        parent.val = temp.val;
-      }
-      current = parent;
-    }
-  }
-
-  extractMin(): BinaryNode<T> {
-    let ancestry: BinaryNode<T>[] = [this.root];
-    let r = this.root;
-    let rightmost;
-    // find the bottommost, rightmost element
-
   }
 }

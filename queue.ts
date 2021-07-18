@@ -3,20 +3,20 @@
  */
 
 interface Node<T> {
-  public val: T;
-  public next: Node<T> | null;
+  val: T;
+  next: Node<T> | null;
 }
 
-export class Queue<Node<T>> {
-  private first: Node<T> | null;
-  private last: Node<T> | null;
+export class Queue {
+  private first: Node<any> | null;
+  private last: Node<any> | null;
 
   constructor() {
     this.first = null;
     this.last = null;
   }
 
-  remove(): Node<T> {
+  remove(): Node<any> {
     if (!this.first) throw new Error();
     const temp = this.first;
     this.first = this.first.next;
@@ -26,8 +26,8 @@ export class Queue<Node<T>> {
     return temp;
   }
 
-  add(item: T): Queue<T> {
-    const node: Node<T> = { val: item, next: this.last };
+  add(item: any): Queue {
+    const node: Node<any> = { val: item, next: this.last };
     this.last = node;
     if (this.first === null) {
       this.first = node;
@@ -35,7 +35,7 @@ export class Queue<Node<T>> {
     return this;
   }
 
-  peek(): T {
+  peek(): any {
     return this.first.val;
   }
 

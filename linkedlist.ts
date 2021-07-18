@@ -4,22 +4,22 @@
  * @since 0.1.0
  */
 
-interface Node<T> {
+export interface Node<T> {
   public val: T;
   public next: Node<T> | null;
 }
 
-export class LinkedList<Node<T>> {
-  private head: Node<T> | null;
-  private tail: Node<T> | null;
+export class LinkedList {
+  private head: Node<any> | null;
+  private tail: Node<any> | null;
 
   constructor() {
     this.head = null;
     this.tail = null;
   }
 
-  append(item: T): LinkedList<Node<T>> {
-    let node: Node<T> = {val: item, next: null};
+  append(item: any): LinkedList {
+    let node: Node<any> = {val: item, next: null};
     if (!this.head) {
       this.head = node;
     }
@@ -30,8 +30,8 @@ export class LinkedList<Node<T>> {
     return this;
   }
 
-  prepend(item: T): LinkedList<Node<T>> {
-    let node: Node<T> = {val: item, next: null};
+  prepend(item: any): LinkedList {
+    let node: Node<any> = {val: item, next: null};
     if (!this.tail) {
       this.tail = node;
     }
@@ -42,11 +42,11 @@ export class LinkedList<Node<T>> {
     return this;
   }
 
-  remove(item: T): void {
-    if (this.head.val === item) {
+  remove(item: Node<any>): Node<any> {
+    if (this.head.val === item.val) {
       return this.removeHead();
     }
-    if (this.tail.val === item) {
+    if (this.tail.val === item.val) {
       return this.removeTail();
     }
     item.val = item.next.val;
@@ -54,7 +54,7 @@ export class LinkedList<Node<T>> {
     return;
   }
 
-  removeHead(): Node<T> {
+  removeHead(): Node<any> {
     if (this.head) {
       const h = this.head;
       this.head = this.head.next;
@@ -63,7 +63,7 @@ export class LinkedList<Node<T>> {
     throw new Error();
   }
 
-  removeTail(): Node<T> {
+  removeTail(): Node<any> {
     if (this.tail) {
       const t = this.tail;
       let temp = this.head;
@@ -76,7 +76,7 @@ export class LinkedList<Node<T>> {
     throw new Error();
   }
 
-  find(item: T): Node<T> {
+  find(item: any): Node<any> {
     let temp = this.head;
     while (temp.val !== item) {
       temp = temp.next;
@@ -86,22 +86,22 @@ export class LinkedList<Node<T>> {
 }
 
 interface DoubleNode<T> {
-  public val: T;
-  public next: DoubleNode<T> | null;
-  public prev: DoubleNode<T> | null;
+  val: T;
+  next: DoubleNode<T> | null;
+  prev: DoubleNode<T> | null;
 }
 
-export class DoublyLinkedList<DoubleNode<T>> {
-  private head: DoubleNode<T> | null;
-  private tail: DoubleNode<T> | null;
+export class DoublyLinkedList {
+  private head: DoubleNode<any> | null;
+  private tail: DoubleNode<any> | null;
 
   constructor() {
     this.head = null;
     this.tail = null;
   }
 
-  append(item: T): DoublyLinkedList<Node<T>> {
-    let node: Node<T> = { val: item, next: null };
+  append(item: any): DoublyLinkedList {
+    let node: DoubleNode<any> = { val: item, next: null, prev: null };
     if (!this.head) {
       this.head = node;
     }
@@ -112,8 +112,8 @@ export class DoublyLinkedList<DoubleNode<T>> {
     return this;
   }
 
-  prepend(item: T): DoublyLinkedList<Node<T>> {
-    let node: Node<T> = { val: item, next: null };
+  prepend(item: any): DoublyLinkedList {
+    let node: DoubleNode<any> = { val: item, next: null, prev: null };
     if (!this.tail) {
       this.tail = node;
     }
@@ -124,19 +124,18 @@ export class DoublyLinkedList<DoubleNode<T>> {
     return this;
   }
 
-  remove(item: T): void {
-    if (this.head.val === item) {
+  remove(item: DoubleNode<any>): DoubleNode<any> {
+    if (this.head.val === item.val) {
       return this.removeHead();
     }
-    if (this.tail.val === item) {
+    if (this.tail.val === item.val) {
       return this.removeTail();
     }
-    item.val = item.next.val;
-    item.next = item.next.next;
+    item.prev.next = item.next;
     return;
   }
 
-  removeHead(): DoubleNode<T> {
+  removeHead(): DoubleNode<any> {
     if (this.head) {
       const h = this.head;
       this.head = this.head.next;
@@ -145,7 +144,7 @@ export class DoublyLinkedList<DoubleNode<T>> {
     throw new Error();
   }
 
-  removeTail(): DoubleNode<T> {
+  removeTail(): DoubleNode<any> {
     if (this.tail) {
       const t = this.tail;
       this.tail = this.tail.prev;
@@ -154,7 +153,7 @@ export class DoublyLinkedList<DoubleNode<T>> {
     throw new Error();
   }
 
-  find(item: T): DoubleNode<T> {
+  find(item: any): DoubleNode<any> {
     let temp = this.head;
     while (temp.val !== item) {
       temp = temp.next;
